@@ -31,3 +31,8 @@ Die Aufgabe besteht darin, den Download-Prozess in einen Android-Service auszula
 
 - Stellen Sie sicher, dass der Service die erforderlichen Berechtigungen für den Internetzugang und den Zugriff auf den lokalen Speicher hat.
 - Beachten Sie, wie Sie den Status des Downloads zurück an die Activity kommunizieren, um die Benutzeroberfläche entsprechend zu aktualisieren.
+
+
+![img.png](img.png)
+ - wie zu sehen funktioniert das builden des Programmes nicht, weswegen das Testen auf dem Emulator nicht möglich war.
+ - Eventuell liegt es an anderen Android Studio Versionen, da die Anleitung nicht mehr aktuell ist, oder wegen Mac/Windows Unterschieden.

@@ -1,18 +1,14 @@
 package at.interactivecuriosity.imagedownload
 
-import android.graphics.BitmapFactory
+import NewService
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import at.interactivecuriosity.imagedownload.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,29 +36,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun downloadImage(urlString: String, fileName: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val url = URL(urlString)
-                val connection = url.openConnection()
-                connection.connect()
-                val inputStream = connection.getInputStream()
-                val file = File(getExternalFilesDir(null), fileName)
-                FileOutputStream(file).use { output ->
-                    inputStream.copyTo(output)
-                }
-                val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                runOnUiThread {
-                    imageView.setImageBitmap(bitmap)
-                    Toast.makeText(this@MainActivity, "Bild heruntergeladen", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                runOnUiThread {
-                    Toast.makeText(this@MainActivity, "Fehler beim Herunterladen", Toast.LENGTH_LONG).show()
-                }
-            }
+        val intent = Intent(this, NewService::class.java).apply {
+            putExtra("url", urlString)
+            putExtra("fileName", fileName)
         }
+        startService(intent)
     }
+
 
     private fun deleteImage(fileName: String) {
         val file = File(getExternalFilesDir(null), fileName)
